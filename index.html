@@ -73,6 +73,10 @@
   .mail span { font-size: clamp(18px, 3vw, 22px); color: var(--grey); user-select: all; overflow-wrap: anywhere; }
   .mail button { font: inherit; font-size: 13px; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; transition: border-color .2s; }
   .mail button:hover { border-color: var(--ink); }
+  .social { font-size: clamp(18px, 3vw, 22px); color: var(--grey); justify-self: start; display: inline-flex; gap: 8px; transition: color .2s; }
+  .social:hover { color: var(--ink); }
+  .social .arrow { display: inline-block; }
+  .social:hover .arrow { transform: translate(2px, -2px); }
   .bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--grey); border-top: 1px solid var(--line); padding-top: 20px; }
 
   @media (max-width: 560px) {
@@ -118,6 +122,7 @@
     <div class="contact">
       <p>Máte příběh? Napište nám.</p>
       <div class="mail"><span id="email"></span><button type="button" id="copy">Kopírovat</button></div>
+      <a class="social" id="instagram" target="_blank" rel="noopener"></a>
     </div>
     <div class="bottom">
       <span>© <span id="year"></span> Podcast Komunit</span>
@@ -133,6 +138,7 @@
     youtube: "https://www.youtube.com/playlist?list=PLUQLju4iFwrI",   // playlist na YouTube
     spotify: "https://open.spotify.com/show/6X9REtbDg3j2nvVDkWn785",  // pořad na Spotify
     email: "michal.andera@vse.cz",
+    instagram: "michalandera",   // jméno na Instagramu bez @
   };
 
   // Díly se načítají automaticky z YouTube (a ze Spotify, pokud je v build.py nastavený RSS feed) příkazem: python3 build.py
@@ -150,6 +156,8 @@
 
   $("tagline").textContent = SHOW.tagline;
   $("email").textContent = SHOW.email;
+  $("instagram").href = "https://www.instagram.com/" + SHOW.instagram + "/";
+  $("instagram").innerHTML = `Instagram @${esc(SHOW.instagram)} <span class="arrow" aria-hidden="true">↗</span>`;
   $("year").textContent = new Date().getFullYear();
   $("note").hidden = !EXAMPLES;
   document.querySelectorAll("[data-link]").forEach((a) => (a.href = SHOW[a.dataset.link]));
