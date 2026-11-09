@@ -16,7 +16,7 @@ from pathlib import Path
 YOUTUBE_PLAYLIST_ID = "PLUQLju4iFwrI"
 # RSS feed from Spotify for Creators (Settings → Availability → RSS distribution). Leave empty if not used.
 # It adds the episode length and episodes that are only on Spotify.
-SPOTIFY_RSS = ""
+SPOTIFY_RSS = "https://anchor.fm/s/1197614ec/podcast/rss"
 
 ROOT = Path(__file__).parent
 PAGE = ROOT / "index.html"
@@ -72,6 +72,7 @@ def spotify_episodes():
             "title": item.findtext("title").strip(),
             "date": parsedate_to_datetime(item.findtext("pubDate")).strftime("%Y-%m-%d"),
             "length": minutes(item.findtext("itunes:duration", namespaces=NS)),
+            "spotify": (item.findtext("link") or "").strip(),
         }
 
 
@@ -89,7 +90,7 @@ def collect():
     out = []
     for no, (k, ep) in enumerate(ordered, 1):
         row = {"no": no, "title": ep["title"], "guest": "", "date": ep["date"], "length": ep.get("length", ""),
-               "youtube": ep.get("youtube", ""), "spotify": ""}
+               "youtube": ep.get("youtube", ""), "spotify": ep.get("spotify", "")}
         row.update({f: v for f, v in extras.get(k, {}).items() if f in row})
         out.append(row)
     return list(reversed(out))  # newest first

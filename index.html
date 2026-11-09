@@ -7,6 +7,7 @@
 <meta property="og:title" content="Podcast Komunit">
 <meta property="og:description" content="Podcast komunit je o lidech, kteří se rozhodli spojovat ostatní. V každém dílu navštívíme jednu komunitu.">
 <meta property="og:locale" content="cs_CZ">
+<link rel="alternate" type="application/rss+xml" title="Podcast Komunit" href="https://anchor.fm/s/1197614ec/podcast/rss">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&family=Host+Grotesk:wght@500;600&display=swap">
@@ -128,7 +129,7 @@
     </div>
     <div class="bottom">
       <span>© <span id="year"></span> Podcast Komunit</span>
-      <a href="https://komunit.cz/">komunit.cz</a>
+      <span><a id="rss" target="_blank" rel="noopener">RSS</a> &nbsp;·&nbsp; <a href="https://komunit.cz/">komunit.cz</a></span>
     </div>
   </div>
 </footer>
@@ -141,13 +142,14 @@
     spotify: "https://open.spotify.com/show/6X9REtbDg3j2nvVDkWn785",  // pořad na Spotify
     email: "michal.andera@vse.cz",
     instagram: "michalandera",   // jméno na Instagramu bez @
+    rss: "https://anchor.fm/s/1197614ec/podcast/rss",   // RSS feed pro podcastové aplikace
   };
 
   // Díly se načítají automaticky z YouTube (a ze Spotify, pokud je v build.py nastavený RSS feed) příkazem: python3 build.py
   // Vlastní doplnění (host, délka, odkaz na Spotify) pište do souboru episodes.json, ne sem; tento seznam se při buildu přepíše.
   const EXAMPLES = false;
   const EPISODES = /* EPISODES:START */[
-    {"no": 1, "title": "Coworking Meandr Řevnice", "guest": "Bashka, kapitánka Meandru", "date": "2026-11-08", "length": "", "youtube": "https://www.youtube.com/watch?v=JRo8RGZOHmM", "spotify": ""}
+    {"no": 1, "title": "Coworking Meandr Řevnice", "guest": "Bashka, kapitánka Meandru", "date": "2026-11-08", "length": "41 min", "youtube": "https://www.youtube.com/watch?v=JRo8RGZOHmM", "spotify": "https://podcasters.spotify.com/pod/show/michal-andera5/episodes/Coworking-Meandr-evnice-e3rjqla"}
   ]/* EPISODES:END */;
   // ===== Konec upravitelné části =====
 
@@ -158,6 +160,7 @@
 
   $("tagline").textContent = SHOW.tagline;
   $("email").textContent = SHOW.email;
+  $("rss").href = SHOW.rss;
   const igUrl = "https://www.instagram.com/" + SHOW.instagram + "/";
   $("instagram").href = igUrl;
   document.querySelectorAll(".ig-link").forEach((a) => (a.href = igUrl));
