@@ -1,0 +1,179 @@
+<title>Podcast Komunit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Podcast komunit je o lidech, kteří se rozhodli spojovat ostatní. V každém dílu navštívíme jednu komunitu: jak vznikla, jak funguje a čím obohacuje životy svých členů.">
+<link rel="canonical" href="https://komunit.cz/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://komunit.cz/">
+<meta property="og:title" content="Podcast Komunit">
+<meta property="og:description" content="Podcast komunit je o lidech, kteří se rozhodli spojovat ostatní. V každém dílu navštívíme jednu komunitu.">
+<meta property="og:locale" content="cs_CZ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&family=Host+Grotesk:wght@500;600&display=swap">
+<style>
+  /* Layout: one narrow column, lots of white space, hairlines instead of boxes. Big name, description, then a plain list of episodes.
+     Palette: paper, ink, grey, hairline, one blue accent used only for the live dot and hover. */
+  :root {
+    --paper:  #fbfbfa;
+    --ink:    #111113;
+    --grey:   #8a8a90;
+    --line:   #e7e7e4;
+    --accent: #2f45ff;
+    --font: "Geist", "Helvetica Neue", Arial, sans-serif;
+    --brand: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --paper: #0e0e10; --ink: #ededee; --grey: #7c7c84; --line: #222226; --accent: #6b7bff; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --paper: #0e0e10; --ink: #ededee; --grey: #7c7c84; --line: #222226; --accent: #6b7bff; color-scheme: dark; }
+
+  * { box-sizing: border-box; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--font); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+  h1, h2 { margin: 0; font-weight: 500; text-wrap: balance; }
+  .wrap { max-width: 760px; margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+  .label { font-family: var(--mono); font-size: 12px; color: var(--grey); letter-spacing: .02em; }
+
+  header .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 32px; }
+  .name { font-family: var(--brand); font-weight: 600; font-size: 16px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  nav { display: flex; gap: 24px; font-size: 15px; color: var(--grey); }
+  nav a:hover { color: var(--ink); }
+
+  .hero .wrap { padding-block: clamp(72px, 14vw, 160px) clamp(64px, 10vw, 120px); display: grid; gap: 28px; }
+  .hero h1 { font-family: var(--brand); font-size: clamp(48px, 10vw, 100px); line-height: .92; letter-spacing: -0.05em; font-weight: 600; }
+  .hero p { margin: 0; font-size: 19px; line-height: 1.6; color: var(--grey); max-width: 52ch; letter-spacing: -0.01em; }
+  .links { display: flex; flex-wrap: wrap; gap: 28px; font-size: 17px; font-weight: 500; }
+  .links a { display: inline-flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 4px; transition: border-color .2s; }
+  .links a:hover { border-color: var(--ink); }
+  .arrow { transition: transform .2s; }
+  .links a:hover .arrow { transform: translate(2px, -2px); }
+
+  section .wrap { padding-block: 32px 64px; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 16px; border-bottom: 1px solid var(--ink); }
+  .head h2 { font-size: 15px; font-weight: 600; }
+
+  .eps { list-style: none; margin: 0; padding: 0; }
+  .ep { display: grid; grid-template-columns: 48px 1fr auto; gap: 4px 20px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .ep .no { font-family: var(--mono); font-size: 13px; color: var(--grey); font-variant-numeric: tabular-nums; }
+  .ep .title { min-width: 0; display: grid; gap: 6px; }
+  .ep h3 { margin: 0; font-size: 19px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.3; }
+  .ep .meta { font-size: 14px; color: var(--grey); font-variant-numeric: tabular-nums; }
+  .ep .new { color: var(--accent); }
+  .ep .go { display: flex; gap: 16px; font-size: 14px; color: var(--grey); white-space: nowrap; }
+  .ep .go a:hover { color: var(--accent); }
+  .note { font-size: 13px; color: var(--grey); margin: 20px 0 0; }
+
+  footer .wrap { padding-block: 64px 56px; display: grid; gap: 40px; }
+  .contact { display: grid; gap: 10px; }
+  .contact p { margin: 0; font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: -0.025em; }
+  .mail { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .mail span { font-size: clamp(18px, 3vw, 22px); color: var(--grey); user-select: all; overflow-wrap: anywhere; }
+  .mail button { font: inherit; font-size: 13px; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; cursor: pointer; transition: border-color .2s; }
+  .mail button:hover { border-color: var(--ink); }
+  .bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--grey); border-top: 1px solid var(--line); padding-top: 20px; }
+
+  @media (max-width: 560px) {
+    nav { gap: 16px; }
+    .ep { grid-template-columns: 36px 1fr; }
+    .ep .go { grid-column: 2; padding-top: 6px; }
+  }
+</style>
+
+<header>
+  <div class="wrap">
+    <a class="name" href="#top"><span class="dot" aria-hidden="true"></span>Podcast Komunit</a>
+    <nav aria-label="Odkazy">
+      <a data-link="spotify" target="_blank" rel="noopener">Spotify</a>
+      <a data-link="youtube" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <h1>Podcast<br>Komunit</h1>
+      <p id="tagline"></p>
+      <div class="links">
+        <a data-link="spotify" target="_blank" rel="noopener">Poslouchat na Spotify <span class="arrow" aria-hidden="true">↗</span></a>
+        <a data-link="youtube" target="_blank" rel="noopener">Sledovat na YouTube <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="eps-title">
+    <div class="wrap">
+      <div class="head"><h2 id="eps-title">Díly</h2><span class="label" id="count"></span></div>
+      <ul class="eps" id="eps"></ul>
+      <p class="note" id="note" hidden>Ukázkové díly. Nahraďte je vlastními v seznamu EPISODES v tomto souboru.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="contact">
+      <p>Máte příběh? Napište nám.</p>
+      <div class="mail"><span id="email"></span><button type="button" id="copy">Kopírovat</button></div>
+    </div>
+    <div class="bottom">
+      <span>© <span id="year"></span> Podcast Komunit</span>
+      <a href="https://komunit.cz/">komunit.cz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ===== Zde upravte údaje o podcastu =====
+  const SHOW = {
+    tagline: "Podcast komunit je o lidech, kteří se rozhodli spojovat ostatní. V každém dílu navštívíme jednu komunitu: zjistíme, jak vznikla, jak funguje a čím obohacuje životy svých členů. Protože komunity jsou přirozená odpověď na dobu, která nás čím dál víc izoluje.",
+    youtube: "https://www.youtube.com/playlist?list=PLUQLju4iFwrI",   // playlist na YouTube
+    spotify: "https://open.spotify.com/show/6X9REtbDg3j2nvVDkWn785",  // pořad na Spotify
+    email: "info@komunit.cz",                                // zkontrolujte, že tato adresa existuje
+  };
+
+  // Díly se načítají automaticky z YouTube (a ze Spotify, pokud je v build.py nastavený RSS feed) příkazem: python3 build.py
+  // Vlastní doplnění (host, délka, odkaz na Spotify) pište do souboru episodes.json, ne sem; tento seznam se při buildu přepíše.
+  const EXAMPLES = false;
+  const EPISODES = /* EPISODES:START */[
+    {"no": 1, "title": "Coworking Meandr Řevnice", "guest": "Bashka, kapitánka Meandru", "date": "2026-11-08", "length": "", "youtube": "https://www.youtube.com/watch?v=JRo8RGZOHmM", "spotify": ""}
+  ]/* EPISODES:END */;
+  // ===== Konec upravitelné části =====
+
+  document.documentElement.lang = "cs";
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmtDate = (d) => new Date(d + "T12:00:00").toLocaleDateString("cs-CZ", { day: "numeric", month: "long", year: "numeric" });
+
+  $("tagline").textContent = SHOW.tagline;
+  $("email").textContent = SHOW.email;
+  $("year").textContent = new Date().getFullYear();
+  $("note").hidden = !EXAMPLES;
+  document.querySelectorAll("[data-link]").forEach((a) => (a.href = SHOW[a.dataset.link]));
+
+  const n = EPISODES.length;
+  $("count").textContent = n + " " + (n === 1 ? "díl" : n > 1 && n < 5 ? "díly" : "dílů");
+  $("eps").innerHTML = EPISODES.map((ep, i) => `
+    <li class="ep">
+      <span class="no">${String(ep.no).padStart(2, "0")}</span>
+      <div class="title">
+        <h3>${esc(ep.title)}</h3>
+        <span class="meta">${i === 0 ? '<span class="new">Nový · </span>' : ""}${[esc(ep.guest), fmtDate(ep.date), esc(ep.length)].filter(Boolean).join(" · ")}</span>
+      </div>
+      <div class="go">
+        <a href="${esc(ep.spotify || SHOW.spotify)}" target="_blank" rel="noopener" aria-label="Díl ${ep.no} na Spotify">Spotify ↗</a>
+        <a href="${esc(ep.youtube || SHOW.youtube)}" target="_blank" rel="noopener" aria-label="Díl ${ep.no} na YouTube">YouTube ↗</a>
+      </div>
+    </li>`).join("");
+
+  $("copy").addEventListener("click", () => {
+    const btn = $("copy");
+    navigator.clipboard.writeText(SHOW.email).then(
+      () => { btn.textContent = "Zkopírováno"; setTimeout(() => (btn.textContent = "Kopírovat"), 1800); },
+      () => { const r = document.createRange(); r.selectNodeContents($("email")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    );
+  });
+</script>

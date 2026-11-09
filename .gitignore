@@ -1,0 +1,6 @@
+dist/
+.DS_Store
+# design comparison pages, not part of the site
+fonts/
+logos/
+previous/
