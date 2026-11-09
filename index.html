@@ -80,7 +80,8 @@
   .bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--grey); border-top: 1px solid var(--line); padding-top: 20px; }
 
   @media (max-width: 560px) {
-    nav { gap: 16px; }
+    header .wrap { flex-wrap: wrap; row-gap: 10px; }
+    nav { gap: 14px; font-size: 14px; }
     .ep { grid-template-columns: 36px 1fr; }
     .ep .go { grid-column: 2; padding-top: 6px; }
   }
@@ -92,6 +93,7 @@
     <nav aria-label="Odkazy">
       <a data-link="spotify" target="_blank" rel="noopener">Spotify</a>
       <a data-link="youtube" target="_blank" rel="noopener">YouTube</a>
+      <a class="ig-link" target="_blank" rel="noopener">Instagram</a>
     </nav>
   </div>
 </header>
@@ -156,7 +158,9 @@
 
   $("tagline").textContent = SHOW.tagline;
   $("email").textContent = SHOW.email;
-  $("instagram").href = "https://www.instagram.com/" + SHOW.instagram + "/";
+  const igUrl = "https://www.instagram.com/" + SHOW.instagram + "/";
+  $("instagram").href = igUrl;
+  document.querySelectorAll(".ig-link").forEach((a) => (a.href = igUrl));
   $("instagram").innerHTML = `Instagram @${esc(SHOW.instagram)} <span class="arrow" aria-hidden="true">↗</span>`;
   $("year").textContent = new Date().getFullYear();
   $("note").hidden = !EXAMPLES;
