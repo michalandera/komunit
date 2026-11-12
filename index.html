@@ -67,6 +67,17 @@
   .ep .go a:hover { color: var(--accent); }
   .note { font-size: 13px; color: var(--grey); margin: 20px 0 0; }
 
+  .about { display: grid; grid-template-columns: 168px 1fr; gap: 40px; padding-top: 32px; align-items: start; }
+  .photo { width: 168px; max-width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--line); display: grid; place-items: center; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+  .photo span { font-family: var(--brand); font-size: 44px; font-weight: 600; letter-spacing: -0.04em; color: var(--grey); }
+  .about-text { display: grid; gap: 28px; min-width: 0; }
+  .about-text h3 { margin: 0 0 6px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--grey); letter-spacing: .02em; }
+  .about-text p { margin: 0; font-size: 17px; line-height: 1.6; max-width: 58ch; }
+  .about-text a { border-bottom: 1px solid var(--line); transition: border-color .2s; }
+  .about-text a:hover { border-color: var(--ink); }
+  .format { font-size: 14px; color: var(--grey); padding-top: 20px; border-top: 1px solid var(--line); }
+
   footer .wrap { padding-block: 64px 56px; display: grid; gap: 40px; }
   .contact { display: grid; gap: 10px; }
   .contact p { margin: 0; font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: -0.025em; }
@@ -81,6 +92,8 @@
   .bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--grey); border-top: 1px solid var(--line); padding-top: 20px; }
 
   @media (max-width: 560px) {
+    .about { grid-template-columns: 1fr; gap: 24px; }
+    .photo { width: 112px; }
     header .wrap { flex-wrap: wrap; row-gap: 10px; }
     nav { gap: 14px; font-size: 14px; }
     .ep { grid-template-columns: 36px 1fr; }
@@ -118,6 +131,21 @@
       <p class="note" id="note" hidden>Ukázkové díly. Nahraďte je vlastními v seznamu EPISODES v tomto souboru.</p>
     </div>
   </section>
+
+  <section aria-labelledby="about-title">
+    <div class="wrap">
+      <div class="head"><h2 id="about-title">O podcastu</h2></div>
+      <div class="about">
+        <div class="photo" id="photo"></div>
+        <div class="about-text">
+          <div><h3>Proč vznikl</h3><p id="about-why"></p></div>
+          <div><h3>Co je cílem</h3><p id="about-goal"></p></div>
+          <div><h3>Kdo ho dělá</h3><p id="about-host"></p></div>
+          <p class="format" id="about-format"></p>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -143,6 +171,14 @@
     email: "michal.andera@vse.cz",
     instagram: "michalandera",   // jméno na Instagramu bez @
     rss: "https://anchor.fm/s/1197614ec/podcast/rss",   // RSS feed pro podcastové aplikace
+    // Sekce „O podcastu“
+    photo: "michal.jpg",   // název souboru s fotkou ve stejné složce, např. "michal.jpg"; prázdné = iniciály
+    initials: "MA",
+    why: "Podcast začal jako výzkumná otázka: jakou roli hrají komunity v rozvoji firem a univerzitních inovačních ekosystémů? Odpovědi hledám v rozhovorech s tvůrci úspěšných komunit. Zkušenosti, které by jinak zůstaly uzavřené v jedné skupině, tak mohou pomoct komunitám napříč obory.",
+    goal: "Inspirovat tvůrce komunit, kteří hledají, jak je dál rozvíjet, i ty, kdo o založení teprve uvažují. Každý díl nahlíží do jedné komunity, dohromady ukazují, co je při rozjezdu a rozvoji důležité. Věřím, že v době rostoucí osamělosti a umělé inteligence budou komunity a univerzity jako místa setkávání důležitější než kdy dřív.",
+    // u textu o moderátorovi můžete použít odkazy <a href="...">...</a>
+    host: 'Jsem Michal Andera. Učím na Fakultě podnikohospodářské VŠE, kde jsem několikrát získal ocenění Excelentní učitel. Rozvíjím <a href="https://unistarter.cz" target="_blank" rel="noopener">unistarter.cz</a>, síť propojující aktivní studenty. Mimo univerzitu jsem spoluzakladatel studia ClarityMotion, které tvoří edukativní animovaná videa a interaktivní aplikace.',
+    format: "Nový díl přibližně každé dva týdny · kolem 40 minut · na Spotify, YouTube a v podcastových aplikacích",
   };
 
   // Díly se načítají automaticky z YouTube (a ze Spotify, pokud je v build.py nastavený RSS feed) příkazem: python3 build.py
@@ -162,6 +198,13 @@
   $("tagline").textContent = SHOW.tagline;
   $("email").textContent = SHOW.email;
   $("rss").href = SHOW.rss;
+  $("about-why").textContent = SHOW.why;
+  $("about-goal").textContent = SHOW.goal;
+  $("about-host").innerHTML = SHOW.host;
+  $("about-format").textContent = SHOW.format;
+  $("photo").innerHTML = SHOW.photo
+    ? `<img src="${esc(SHOW.photo)}" alt="Michal Andera, moderátor">`
+    : `<span aria-hidden="true">${esc(SHOW.initials)}</span>`;
   const igUrl = "https://www.instagram.com/" + SHOW.instagram + "/";
   $("instagram").href = igUrl;
   document.querySelectorAll(".ig-link").forEach((a) => (a.href = igUrl));

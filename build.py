@@ -133,6 +133,8 @@ def build():
     out.mkdir(exist_ok=True)
     (out / "index.html").write_text(html, encoding="utf-8")
     (out / "CNAME").write_text("komunit.cz\n", encoding="utf-8")  # used by GitHub Pages; harmless elsewhere
+    for img in ROOT.glob("*.jpg"):  # photos used by the page, e.g. michal.jpg
+        (out / img.name).write_bytes(img.read_bytes())
     print(f"Wrote {out / 'index.html'}")
 
 
