@@ -71,6 +71,10 @@
   .photo { width: 168px; max-width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: var(--line); display: grid; place-items: center; }
   .photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
   .photo span { font-family: var(--brand); font-size: 44px; font-weight: 600; letter-spacing: -0.04em; color: var(--grey); }
+  .host { margin: 0; display: grid; gap: 14px; justify-items: start; }
+  .host figcaption { display: grid; gap: 2px; }
+  .host strong { font-family: var(--brand); font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+  .host span { font-size: 14px; color: var(--grey); }
   .about-text { display: grid; gap: 28px; min-width: 0; }
   .about-text h3 { margin: 0 0 6px; font-family: var(--mono); font-size: 12px; font-weight: 400; color: var(--grey); letter-spacing: .02em; }
   .about-text p { margin: 0; font-size: 17px; line-height: 1.6; max-width: 58ch; }
@@ -136,7 +140,10 @@
     <div class="wrap">
       <div class="head"><h2 id="about-title">O podcastu</h2></div>
       <div class="about">
-        <div class="photo" id="photo"></div>
+        <figure class="host">
+          <div class="photo" id="photo"></div>
+          <figcaption><strong>Michal Andera</strong><span>moderátor</span></figcaption>
+        </figure>
         <div class="about-text">
           <div><h3>Proč vznikl</h3><p id="about-why"></p></div>
           <div><h3>Co je cílem</h3><p id="about-goal"></p></div>
